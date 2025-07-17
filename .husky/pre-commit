@@ -1,2 +1,26 @@
-npm run lint
-npm run test
+#!/bin/bash
+
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM "*.jsx" "*.ts" "*.tsx")
+
+if [[ -z "$STAGED_FILES" ]]; then
+  echo "No staged JSX/TS files found. Skipping..."
+  exit 0
+fi
+
+echo "Running checks for files:"
+echo "$STAGED_FILES"
+
+# Форматирование
+echo "Running Prettier..."
+npx prettier --write $STAGED_FILES
+
+# Линтинг
+echo "Running ESLint..."
+npx eslint --fix $STAGED_FILES
+
+# Проверка типов (для всех файлов, а не только staged)
+echo "Running TypeScript check..."
+npx tsc --noEmit
+
+# Добавляем исправленные файлы обратно в staging
+git add $STAGED_FILES
