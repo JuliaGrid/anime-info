@@ -9,6 +9,7 @@
     "deploy": "gh-pages -d dist",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
+    "lint:fix": "eslint --fix",
     "preview": "vite preview",
     "format:fix": "prettier --write",
     "format:fix:all": "prettier --write .",

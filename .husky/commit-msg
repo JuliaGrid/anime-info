@@ -1,21 +1,22 @@
 #!/bin/bash  # ← Изменили здесь
 
 message="$(cat $1)"
-requiredPattern="^(add|cut|fix|bump|make|start|stop|refactor|reformat|optimise|document|merge): .*$"
+requiredPattern="^(feat|fix|chore|docs|style|refactor|perf|test|build|ci|revert|bump)(\([\w\-]+\))?!?: .+$"
 if ! [[ $message =~ $requiredPattern ]]; then
-  echo "-"
-  echo "-"
-  echo "-"
+  echo "------------------------------------------"
   echo "🚨 Wrong commit message! 😕"
+  echo " "
   echo "The commit message must have this format:"
-  echo "<verb in imperative mood> <what was done>"
-  echo "Allowed verbs in imperative mood: add, cut, fix, bump, make, start, stop, refactor, reformat, optimise, document, merge"
+  echo "<type>: <what was done>"
+  echo " "
+  echo "Allowed type: feat, fix, chore, docs, style, refactor, perf, test, build, ci, revert, bump"
+  echo " "
   echo "Example: add login button"
-  echo "-"
+  echo " "
   echo "Your commit message was:"
   echo "$message"  # ← Также добавили кавычки здесь для безопасности
-  echo "-"
-  echo "For more information, check script in .husky/commit-msg"
-  echo "-"
+  echo " "
+  echo "Help: https://www.conventionalcommits.org/en/v1.0.0/"
+  echo "------------------------------------------"
   exit 1
 fi
