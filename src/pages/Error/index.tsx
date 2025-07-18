@@ -4,6 +4,7 @@ interface IErrorPage {
 
 export const ErrorPage = (props: IErrorPage) => {
   const { error } = props;
+
   const reloadPage = () => {
     location.reload();
   };

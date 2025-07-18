@@ -1,0 +1,49 @@
+#!/bin/bash
+
+# Получаем staged файлы
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM "*.jsx" "*.ts" "*.tsx")
+
+if [[ -z "$STAGED_FILES" ]]; then
+  echo "No staged JSX/TS files found. Skipping..."
+  exit 0
+fi
+
+echo "Running checks for files"
+printf '%s\n' "$STAGED_FILES"
+echo "------------------------"
+
+# Обрабатываем каждый файл отдельно
+for file in $STAGED_FILES; do
+  echo "🔍 Processing $file"
+  
+  # Форматирование
+  echo "🎨 Running Prettier..."
+  npx prettier --write "$file"
+  
+  # Линтинг
+  echo "🧹 Running ESLint..."
+  npx eslint --fix "$file"
+  
+#   # Проверка тестов для файла (если есть соответствующий тест)
+#   test_file="${file/.ts/.test.ts}"
+#   test_file="${test_file/.tsx/.test.tsx}"
+#   if [[ -f "$test_file" ]]; then
+#     echo "🧪 Running tests for $file..."
+#     npx jest "$test_file" --passWithNoTests
+#   fi
+  echo "------------------------"
+done
+
+# Глобальные проверки (для всего проекта)
+echo "🌐 Running global checks..."
+
+# Проверка типов TypeScript
+echo "📝 Running TypeScript check..."
+npx tsc --noEmit
+
+# Добавляем исправленные файлы обратно в staging
+echo "➕ Adding fixed files to staging..."
+git add $STAGED_FILES
+
+echo "------------------------"
+echo "✅ All checks completed successfully!"
