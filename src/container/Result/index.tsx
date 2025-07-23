@@ -1,11 +1,12 @@
-import { Item } from '../../components/Item';
+import { Item, type IAnimeItem } from '../../components/Item';
 import { Loader } from '../../components/Loader';
 import { Error } from '../../components/Error';
+import './style.css';
 
 interface IResult {
   isLoading: boolean;
   isError: boolean;
-  result: string[];
+  result: IAnimeItem[];
 }
 
 export const Result = (props: IResult) => {
@@ -20,9 +21,9 @@ export const Result = (props: IResult) => {
   }
 
   return (
-    <div>
-      {result.map((title) => (
-        <Item key={title} title={title} />
+    <div className="result">
+      {result.map((item) => (
+        <Item key={item.title} animeItem={item} />
       ))}
     </div>
   );
