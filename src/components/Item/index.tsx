@@ -1,7 +1,7 @@
 import { BookmarkIcon } from '../../assets/icon/bookmark';
 import { StarIcon } from '../../assets/icon/star';
 import { UserIcon } from '../../assets/icon/user';
-import './style.css';
+import classes from './style.module.css';
 
 interface IItem {
   animeItem: IAnimeItem;
@@ -26,21 +26,21 @@ export const Item = (props: IItem) => {
 
   // if (true) {
   return (
-    <div className="item">
-      <img className="image" src={image_url} />
-      <div className="content">
-        <div className="test">
-          <p className="aired">{status}</p>
+    <div className={classes.item}>
+      <img className={classes.image} src={image_url} />
+      <div className={classes.content}>
+        <div className={classes.test}>
+          <p className={classes.aired}>{status}</p>
           <BookmarkIcon />
         </div>
-        <div className="info">
+        <div className={classes.info}>
           <p>{year}</p>
           <p>{episodes} episodes</p>
         </div>
 
-        <b className="title">{title}</b>
+        <b className={classes.title}>{title}</b>
 
-        <div className="rank">
+        <div className={classes.rank}>
           {score && (
             <div>
               <StarIcon />
@@ -53,9 +53,9 @@ export const Item = (props: IItem) => {
           </div>
         </div>
 
-        <div className="genres">
+        <div className={classes.genres}>
           {genres.map((name) => (
-            <div key="name" className="label">
+            <div key="name" className={classes.label}>
               {name}
             </div>
           ))}
