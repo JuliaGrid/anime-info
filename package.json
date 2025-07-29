@@ -16,7 +16,8 @@
     "test": "jest",
     "prepare": "husky",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "chromatic": "npx chromatic --project-token=chpt_718fcb00dfcbd3d"
   },
   "dependencies": {
     "@babel/preset-typescript": "^7.27.1",
