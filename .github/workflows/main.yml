@@ -77,9 +77,8 @@ jobs:
           else
             echo "✅ No visual changes detected."
           fi
-
-        # env:
-        #   CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+        env:
+          CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
 
   deploy:
     runs-on: ubuntu-latest
