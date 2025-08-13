@@ -57,28 +57,37 @@ jobs:
           node-version: 20
           cache: 'npm'
       - run: npm install
-      - run: |
+      - name: Run Chromatic
+        id: chromatic
+        run: |
           set +e
-          OUTPUT=$(npx chromatic --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN }} --no-interactive)
-          STATUS=$?
+          OUTPUT=$(npm run chromatic 2>&1)
+          EXIT_CODE=$?
 
-          # Достаём ссылки на билд
-          STORYBOOK_URL=$(echo "$OUTPUT" | grep -oE 'https://[^\ ]*chromatic\.com/[^\ ]*' | grep -v 'manage')
-          BUILD_URL=$(echo "$OUTPUT" | grep -oE 'https://www\.chromatic\.com/build\?appId=[^\ ]*')
+          echo "$OUTPUT" > chromatic.log
 
-          echo ""
-          echo "🔗 **Storybook:** $STORYBOOK_URL"
-          echo "🔍 **Build details:** $BUILD_URL"
-          echo ""
-          if [ $STATUS -ne 0 ]; then
-            echo "🚨 **Ошибки скриншотных тестов!** Пожалуйста, просмотрите информацию по ссылке и подтвердите изменения."
-            echo "📌 Ссылка на изменения: $BUILD_URL"
-            exit 1
-          else
-            echo "✅ No visual changes detected."
-          fi
+          # Ищем ссылку на билд Chromatic
+          BUILD_URL=$(echo "$OUTPUT" | grep -Eo 'https://www.chromatic.com/build\?appId[^ ]+')
+
+          echo "build_url=$BUILD_URL" >> $GITHUB_OUTPUT
+
+          exit $EXIT_CODE
         env:
           CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+      - name: Chromatic failed message
+        if: failure()
+        run: |
+          echo "::error::❌ Chromatic визуальные тесты не прошли!"
+          if [ -n "${{ steps.chromatic.outputs.build_url }}" ]; then
+            echo "📄 Отчёт Chromatic: ${{ steps.chromatic.outputs.build_url }}"
+          else
+            echo "⚠️ Ссылка на билд не найдена в выводе."
+          fi
+          echo ""
+          echo "Что делать:"
+          echo "1. Откройте отчёт и посмотрите визуальные изменения."
+          echo "2. Если они ожидаемы — обновите снапшоты."
+          echo "3. Если нет — исправьте код и запустите снова."
 
   deploy:
     runs-on: ubuntu-latest
