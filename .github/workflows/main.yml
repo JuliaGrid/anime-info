@@ -32,7 +32,7 @@ jobs:
         run:
           command: npm run chromatic
 
-deploy:
+  Deploy:
   if: github.ref == 'refs/heads/main'
   needs: build-and-test
   runs-on: ubuntu-latest
