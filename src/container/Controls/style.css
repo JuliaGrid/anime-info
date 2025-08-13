@@ -1,0 +1,8 @@
+.controls {
+  display: flex;
+  justify-content: space-between;
+}
+
+.input {
+  margin-right: 10px;
+}

@@ -18,17 +18,28 @@ export function Main() {
     setIsLoading(true);
     fetch(`https://api.jikan.moe/v4/anime?q=${input}`)
       .then((response) => response.json())
-      .then((result) =>
-        setResult(result.data.map((item: Result) => item.title))
-      )
+      .then((result) => {
+        setResult(
+          result.data.map((item) => ({
+            title: item.title,
+            image_url: item.images.jpg.image_url,
+            status: item.status,
+            year: item.aired.prop.from.year,
+            score: item.score,
+            members: item.members,
+            episodes: item.episodes,
+            genres: item.genres.map(({ name }) => name),
+          }))
+        );
+      })
       .catch(() => setIsError(true))
       .finally(() => setIsLoading(false));
   };
 
   return (
-    <div className="wrapper">
+    <div>
       <div className="header">
-        <h1>Anime</h1>
+        <h1 className="title-h1">Anime</h1>
         <Controls buttonHandler={buttonHandler} />
       </div>
       <Result isLoading={isLoading} isError={isError} result={result} />

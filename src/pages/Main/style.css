@@ -3,13 +3,15 @@
 }
 
 .wrapper {
-  text-align: center;
-  width: fit-content;
+  /* width: fit-content; */
   margin: auto;
 }
 
 .header {
-  text-align: center;
   width: fit-content;
   margin: auto;
+}
+
+.title-h1 {
+  text-align: center;
 }

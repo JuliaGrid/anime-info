@@ -1,3 +1,19 @@
+https://juliagrid.github.io/anime-info/
+
+## Conventional Commits:
+
+- feat: Добавление новой функциональности.
+- fix: Исправление ошибки.
+- docs: Изменение в документации.
+- style: Правки по стилю (форматирование, пробелы, запятые и т. д.).
+- refactor: Рефакторинг кода без исправления ошибок или добавления нового функционала.
+- perf: Оптимизация производительности.
+- test: Добавление или обновление тестов.
+- build: Изменения, касающиеся сборки проекта.
+- ci: Настройка или изменение CI/CD.
+- chore: Прочие задачи (например, изменения в .gitignore).
+- revert: Откат предыдущего коммита.
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

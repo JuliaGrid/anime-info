@@ -1,5 +1,6 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { Main } from '.';
+import { apiMock } from '../../__tests__/__mocks__/anime';
 
 describe('Main', () => {
   beforeEach(() => {
@@ -16,11 +17,9 @@ describe('Main', () => {
 
     (fetch as jest.Mock).mockResolvedValueOnce({
       json: async () => ({
-        data: [{ title: 'Naruto' }],
+        data: [apiMock],
       }),
     });
-
-    console.log();
 
     fireEvent.change(screen.getByRole('textbox'), {
       target: { value: 'naruto' },
@@ -54,7 +53,7 @@ it('shows error on fetch failure', async () => {
 it('does not call fetch on empty input', () => {
   (fetch as jest.Mock).mockResolvedValueOnce({
     json: async () => ({
-      data: [{ title: 'Naruto' }],
+      data: [apiMock],
     }),
   });
 
