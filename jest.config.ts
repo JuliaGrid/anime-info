@@ -14,7 +14,7 @@ const config: Config = {
       },
     ],
   },
-  testPathIgnorePatterns: ['/node_modules/'],
+  testPathIgnorePatterns: ['/node_modules/', '/src/__tests__/__mocks__/'],
   clearMocks: true,
   collectCoverage: true,
   coverageDirectory: 'coverage',

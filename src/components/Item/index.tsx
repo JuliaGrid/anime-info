@@ -20,14 +20,12 @@ export interface IAnimeItem {
 
 export const Item = (props: IItem) => {
   const { animeItem } = props;
-  console.log('animeItem', animeItem);
   const { title, image_url, status, year, score, genres, members, episodes } =
     animeItem;
 
-  // if (true) {
   return (
     <div className={classes.item}>
-      <img className={classes.image} src={image_url} />
+      {image_url && <img className={classes.image} src={image_url} />}
       <div className={classes.content}>
         <div className={classes.test}>
           <p className={classes.aired}>{status}</p>
@@ -55,7 +53,7 @@ export const Item = (props: IItem) => {
 
         <div className={classes.genres}>
           {genres.map((name) => (
-            <div key="name" className={classes.label}>
+            <div key={name} className={classes.label}>
               {name}
             </div>
           ))}
@@ -63,7 +61,4 @@ export const Item = (props: IItem) => {
       </div>
     </div>
   );
-  // }
-
-  return <p>{title}</p>;
 };

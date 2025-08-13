@@ -19,7 +19,6 @@ export function Main() {
     fetch(`https://api.jikan.moe/v4/anime?q=${input}`)
       .then((response) => response.json())
       .then((result) => {
-        console.log('result', result);
         setResult(
           result.data.map((item) => ({
             title: item.title,
@@ -36,8 +35,6 @@ export function Main() {
       .catch(() => setIsError(true))
       .finally(() => setIsLoading(false));
   };
-
-  console.log('res', result);
 
   return (
     <div>
