@@ -1,7 +1,7 @@
 name: Frontend CI/CD
 on: [push]
 jobs:
-  Build-and-test:
+  build-and-test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -29,10 +29,9 @@ jobs:
         run: npm test
 
       - name: Screenshots test
-        run:
-          command: npm run chromatic
+        run: npm run chromatic
 
-  Deploy:
+  deploy:
     if: github.ref == 'refs/heads/main'
     needs: build-and-test
     runs-on: ubuntu-latest
