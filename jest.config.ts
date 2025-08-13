@@ -7,7 +7,12 @@ import type { Config } from 'jest';
 
 const config: Config = {
   transform: {
-    '^.+\\.tsx?$': 'ts-jest',
+    '^.+\\.tsx?$': [
+      'ts-jest',
+      {
+        tsconfig: 'tsconfig.test.json',
+      },
+    ],
   },
   testPathIgnorePatterns: ['/node_modules/'],
   clearMocks: true,
@@ -21,13 +26,21 @@ const config: Config = {
       lines: 40,
     },
   },
+  coveragePathIgnorePatterns: ['/node_modules/', '/src/assets/'],
   testEnvironment: 'jsdom',
   setupFilesAfterEnv: ['<rootDir>/setupTests.ts'],
   moduleNameMapper: {
     '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
       '<rootDir>/__mocks__/fileMock.js',
-    '\\.(css|less)$': 'identity-obj-proxy',
+    // '^.+\\.module\\.(css|less)$': 'identity-obj-proxy',
+    // '\\.(css|less)$': 'identity-obj-proxy',
+    '^.+\\.module\\.(css|less)$': 'identity-obj-proxy', // <-- CSS-модули
+    '\\.(css|less)$': '<rootDir>/__mocks__/styleMock.js', //
   },
+  reporters: [
+    'default', // стандартный — полный вывод с ошибками
+    '<rootDir>/failedReporter.js', // наш — список в конце
+  ],
 };
 
 export default config;

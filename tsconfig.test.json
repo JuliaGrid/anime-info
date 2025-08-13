@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    "module": "CommonJS",
+    "verbatimModuleSyntax": false,
+    "noImplicitAny": false
+  },
+  "include": ["src", "global.d.ts", "setupTests.ts"]
+}

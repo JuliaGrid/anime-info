@@ -16,11 +16,22 @@ describe('Main', () => {
 
     (fetch as jest.Mock).mockResolvedValueOnce({
       json: async () => ({
-        data: [{ title: 'Naruto' }],
+        data: [
+          {
+            title: 'Naruto',
+            image_url: '',
+            status: '',
+            year: '',
+            score: '',
+            members: '',
+            episodes: '',
+            genres: '',
+          },
+        ],
       }),
     });
 
-    console.log();
+    // console.log();
 
     fireEvent.change(screen.getByRole('textbox'), {
       target: { value: 'naruto' },
