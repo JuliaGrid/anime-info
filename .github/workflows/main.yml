@@ -57,9 +57,29 @@ jobs:
           node-version: 20
           cache: 'npm'
       - run: npm install
-      - run: npm run chromatic
-        env:
-          CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+      - run: |
+          set +e
+          OUTPUT=$(npx chromatic --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN }} --no-interactive)
+          STATUS=$?
+
+          # Достаём ссылки на билд
+          STORYBOOK_URL=$(echo "$OUTPUT" | grep -oE 'https://[^\ ]*chromatic\.com/[^\ ]*' | grep -v 'manage')
+          BUILD_URL=$(echo "$OUTPUT" | grep -oE 'https://www\.chromatic\.com/build\?appId=[^\ ]*')
+
+          echo ""
+          echo "🔗 **Storybook:** $STORYBOOK_URL"
+          echo "🔍 **Build details:** $BUILD_URL"
+          echo ""
+          if [ $STATUS -ne 0 ]; then
+            echo "🚨 **Ошибки скриншотных тестов!** Пожалуйста, просмотрите информацию по ссылке и подтвердите изменения."
+            echo "📌 Ссылка на изменения: $BUILD_URL"
+            exit 1
+          else
+            echo "✅ No visual changes detected."
+          fi
+
+        # env:
+        #   CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
 
   deploy:
     runs-on: ubuntu-latest
