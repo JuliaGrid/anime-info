@@ -2,32 +2,11 @@ import { useState } from 'react';
 import { Controls } from '../../container/Controls';
 import { Result } from '../../container/Result';
 import './style.css';
+import { Api, type Anime } from '../../../jikan-client/Api';
+const api = new Api();
 
 interface Result {
   title: string;
-}
-
-interface animeData {
-  title: string;
-  images: {
-    jpg: {
-      image_url: string;
-    };
-  };
-  status: string;
-  aired: {
-    prop: {
-      from: {
-        year: number;
-      };
-    };
-  };
-  score: number;
-  members: number;
-  episodes: number;
-  genres: {
-    name: string;
-  }[];
 }
 
 export function Main() {
@@ -39,19 +18,21 @@ export function Main() {
     if (!input.trim()) return;
 
     setIsLoading(true);
-    fetch(`https://api.jikan.moe/v4/anime?q=${input}`)
+
+    api.anime
+      .getAnimeSearch({ q: input })
       .then((response) => response.json())
       .then((result) => {
         setResult(
-          result.data.map((item: animeData) => ({
+          result.data.map((item: Anime) => ({
             title: item.title,
-            image_url: item.images.jpg.image_url,
+            image_url: item.images?.jpg?.image_url,
             status: item.status,
-            year: item.aired.prop.from.year,
+            year: item.aired?.prop?.from?.year,
             score: item.score,
             members: item.members,
             episodes: item.episodes,
-            genres: item.genres.map(({ name }) => name),
+            genres: item.genres?.map(({ name }) => name),
           }))
         );
       })
