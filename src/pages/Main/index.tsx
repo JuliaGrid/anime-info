@@ -7,6 +7,29 @@ interface Result {
   title: string;
 }
 
+interface animeData {
+  title: string;
+  images: {
+    jpg: {
+      image_url: string;
+    };
+  };
+  status: string;
+  aired: {
+    prop: {
+      from: {
+        year: number;
+      };
+    };
+  };
+  score: number;
+  members: number;
+  episodes: number;
+  genres: {
+    name: string;
+  }[];
+}
+
 export function Main() {
   const [result, setResult] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -20,7 +43,7 @@ export function Main() {
       .then((response) => response.json())
       .then((result) => {
         setResult(
-          result.data.map((item) => ({
+          result.data.map((item: animeData) => ({
             title: item.title,
             image_url: item.images.jpg.image_url,
             status: item.status,
