@@ -3,7 +3,6 @@ import { Controls } from '../../container/Controls';
 import { Result } from '../../container/Result';
 import './style.css';
 import { Api, type Anime } from '../../../jikan-client/Api';
-const api = new Api();
 
 interface Result {
   title: string;
@@ -13,6 +12,7 @@ export function Main() {
   const [result, setResult] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const api = new Api();
 
   const buttonHandler = (input: string) => {
     if (!input.trim()) return;
