@@ -13,7 +13,7 @@ const dirname =
 
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
-  base: '/rs-react-app/',
+  base: '',
   plugins: [react()],
   test: {
     projects: [

@@ -90,7 +90,7 @@ jobs:
           echo "3. Если нет — исправьте код и запустите снова."
 
   deploy:
-    # if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main'
     needs: [build, lint, typecheck, unit-tests, chromatic]
     runs-on: ubuntu-latest
     steps:
