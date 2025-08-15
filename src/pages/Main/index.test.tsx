@@ -1,65 +1,81 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { Main } from '.';
 import { apiMock } from '../../__tests__/__mocks__/anime';
+import { Api } from '../../../jikan-client/Api';
 
-describe('Main', () => {
-  beforeEach(() => {
-    global.fetch = jest.fn();
+jest.mock('../../../jikan-client/Api');
+
+function mockApi(isError = false) {
+  let promiseAnswer = Promise.resolve({ data: [apiMock] });
+
+  const getAnimeSearchMock = jest.fn().mockResolvedValue({
+    json: () => promiseAnswer,
   });
 
+  if (isError) {
+    promiseAnswer = Promise.reject(new Error('Failed to fetch'));
+  }
+
+  (Api as jest.Mock).mockImplementation(() => ({
+    anime: { getAnimeSearch: getAnimeSearchMock },
+  }));
+
+  return getAnimeSearchMock;
+}
+
+describe('Main', () => {
   it('render component', () => {
     render(<Main />);
     expect(screen.getByText('Anime')).toBeInTheDocument();
   });
 
-  it('api', async () => {
+  it('calls API and renders results', async () => {
+    const getAnimeSearchMock = mockApi();
+
     render(<Main />);
 
-    (fetch as jest.Mock).mockResolvedValueOnce({
-      json: async () => ({
-        data: [apiMock],
-      }),
-    });
+    const input = screen.getByRole('textbox');
+    const button = screen.getByRole('button');
 
-    fireEvent.change(screen.getByRole('textbox'), {
-      target: { value: 'naruto' },
-    });
-    fireEvent.click(screen.getByText('Search'));
-
-    expect(fetch).toHaveBeenCalledWith(
-      'https://api.jikan.moe/v4/anime?q=naruto'
-    );
+    fireEvent.change(input, { target: { value: 'Naruto' } });
+    fireEvent.click(button);
 
     await waitFor(() => {
+      expect(getAnimeSearchMock).toHaveBeenCalledWith({ q: 'Naruto' });
       expect(screen.getByText('Naruto')).toBeInTheDocument();
     });
   });
-});
 
-it('shows error on fetch failure', async () => {
-  (fetch as jest.Mock).mockRejectedValueOnce(new Error('API failed'));
+  it('calls error API and renders error', async () => {
+    const getAnimeSearchMock = mockApi(true);
 
-  render(<Main />);
-  fireEvent.change(screen.getByRole('textbox'), {
-    target: { value: 'naruto' },
-  });
-  fireEvent.click(screen.getByText('Search'));
+    render(<Main />);
 
-  await waitFor(() => {
-    expect(screen.getByText('Error')).toBeInTheDocument();
-  });
-});
+    const input = screen.getByRole('textbox');
+    const button = screen.getByRole('button');
 
-it('does not call fetch on empty input', () => {
-  (fetch as jest.Mock).mockResolvedValueOnce({
-    json: async () => ({
-      data: [apiMock],
-    }),
+    fireEvent.change(input, { target: { value: 'Naruto' } });
+    fireEvent.click(button);
+
+    await waitFor(() => {
+      expect(getAnimeSearchMock).toHaveBeenCalledWith({ q: 'Naruto' });
+      expect(screen.getByText('Error')).toBeInTheDocument();
+    });
   });
 
-  render(<Main />);
+  it('not calls API eith empty input', async () => {
+    const getAnimeSearchMock = mockApi();
 
-  fireEvent.click(screen.getByText('Search'));
+    render(<Main />);
 
-  expect(fetch).toHaveBeenCalledTimes(0);
+    const input = screen.getByRole('textbox');
+    const button = screen.getByRole('button');
+
+    fireEvent.change(input, { target: { value: '' } });
+    fireEvent.click(button);
+
+    await waitFor(() => {
+      expect(getAnimeSearchMock).toHaveBeenCalledTimes(0);
+    });
+  });
 });

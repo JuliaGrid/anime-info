@@ -1,6 +1,7 @@
+import type { Anime } from '../../../jikan-client/Api';
 import type { IAnimeItem } from '../../components/Item';
 
-export const apiMock = {
+export const apiMock: Anime = {
   title: 'Naruto',
   images: { jpg: { image_url: 'https://example.com/naruto.jpg' } },
   status: 'Finished Airing',
@@ -13,11 +14,11 @@ export const apiMock = {
 
 export const animeMock: IAnimeItem = {
   title: 'Naruto',
-  image_url: '',
-  status: '',
-  year: 0,
-  score: 0,
-  members: 0,
-  episodes: 0,
-  genres: [],
+  image_url: 'https://example.com/naruto.jpg',
+  status: 'Finished Airing',
+  year: 2002,
+  score: 7.9,
+  members: 123456,
+  episodes: 220,
+  genres: ['Action', 'Adventure'],
 };

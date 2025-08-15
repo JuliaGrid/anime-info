@@ -14,7 +14,11 @@ const config: Config = {
       },
     ],
   },
-  testPathIgnorePatterns: ['/node_modules/', '/src/__tests__/__mocks__/'],
+  testPathIgnorePatterns: [
+    '/node_modules/',
+    '/src/__tests__/__mocks__/',
+    '/jikan-client/',
+  ],
   clearMocks: true,
   collectCoverage: true,
   coverageDirectory: 'coverage',
@@ -26,7 +30,11 @@ const config: Config = {
       lines: 40,
     },
   },
-  coveragePathIgnorePatterns: ['/node_modules/', '/src/assets/'],
+  coveragePathIgnorePatterns: [
+    '/node_modules/',
+    '/src/assets/',
+    '/jikan-client/',
+  ],
   testEnvironment: 'jsdom',
   setupFilesAfterEnv: ['<rootDir>/setupTests.ts'],
   moduleNameMapper: {
