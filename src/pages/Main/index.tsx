@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Controls } from '../../container/Controls';
-import { Result } from '../../container/Result';
+import { Controls } from '../../containers/Controls';
+import { Result } from '../../containers/Result';
 import './style.css';
 import { Api, type Anime } from '../../../jikan-client/Api';
 

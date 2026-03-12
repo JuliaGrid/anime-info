@@ -1,0 +1,9 @@
+.result {
+  margin: auto;
+  width: fit-content;
+  margin-top: 40px;
+}
+
+.result__item {
+  margin-top: 40px;
+}

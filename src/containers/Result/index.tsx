@@ -1,7 +1,7 @@
 import { Item, type IAnimeItem } from '../../components/Item';
 import { Loader } from '../../components/Loader';
 import { Error } from '../../components/Error';
-import './style.css';
+import classes from './index.module.css';
 
 interface IResult {
   isLoading: boolean;
@@ -13,17 +13,27 @@ export const Result = (props: IResult) => {
   const { isLoading, isError, result } = props;
 
   if (isLoading) {
-    return <Loader />;
+    return (
+      <div className={classes.result}>
+        <Loader />
+      </div>
+    );
   }
 
   if (isError) {
-    return <Error />;
+    return (
+      <div className={classes.result}>
+        <Error />
+      </div>
+    );
   }
 
   return (
-    <div className="result">
+    <div className={classes.result}>
       {result.map((item) => (
-        <Item key={item.title} animeItem={item} />
+        <div className={classes.result__item}>
+          <Item key={item.title} animeItem={item} />
+        </div>
       ))}
     </div>
   );
