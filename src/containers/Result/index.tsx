@@ -31,8 +31,8 @@ export const Result = (props: IResult) => {
   return (
     <div className={classes.result}>
       {result.map((item) => (
-        <div className={classes.result__item}>
-          <Item key={item.title} animeItem={item} />
+        <div key={item.title} className={classes.result__item}>
+          <Item animeItem={item} />
         </div>
       ))}
     </div>
