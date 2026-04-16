@@ -1,4 +1,5 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import { Main } from '.';
 import { apiMock } from '../../__tests__/__mocks__/anime';
 import { Api } from '../../../jikan-client/Api';
@@ -25,14 +26,22 @@ function mockApi(isError = false) {
 
 describe('Main', () => {
   it('render component', () => {
-    render(<Main />);
-    expect(screen.getByText('Anime')).toBeInTheDocument();
+    render(
+      <MemoryRouter>
+        <Main />
+      </MemoryRouter>
+    );
+    expect(screen.getByText('AnimeList')).toBeInTheDocument();
   });
 
   it('calls API and renders results', async () => {
     const getAnimeSearchMock = mockApi();
 
-    render(<Main />);
+    render(
+      <MemoryRouter>
+        <Main />
+      </MemoryRouter>
+    );
 
     const input = screen.getByRole('textbox');
     const button = screen.getByRole('button');
@@ -49,7 +58,11 @@ describe('Main', () => {
   it('calls error API and renders error', async () => {
     const getAnimeSearchMock = mockApi(true);
 
-    render(<Main />);
+    render(
+      <MemoryRouter>
+        <Main />
+      </MemoryRouter>
+    );
 
     const input = screen.getByRole('textbox');
     const button = screen.getByRole('button');
@@ -66,7 +79,11 @@ describe('Main', () => {
   it('not calls API eith empty input', async () => {
     const getAnimeSearchMock = mockApi();
 
-    render(<Main />);
+    render(
+      <MemoryRouter>
+        <Main />
+      </MemoryRouter>
+    );
 
     const input = screen.getByRole('textbox');
     const button = screen.getByRole('button');

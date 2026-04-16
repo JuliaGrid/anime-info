@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Controls } from '../../containers/Controls';
+import { Header } from '../../containers/Header';
 import { Result } from '../../containers/Result';
 import './style.css';
 import { Api, type Anime } from '../../../jikan-client/Api';
@@ -42,11 +43,11 @@ export function Main() {
 
   return (
     <div>
-      <div className="header">
-        <h1 className="title-h1">Anime</h1>
+      <Header />
+      <div className="wrapper">
         <Controls buttonHandler={buttonHandler} />
+        <Result isLoading={isLoading} isError={isError} result={result} />
       </div>
-      <Result isLoading={isLoading} isError={isError} result={result} />
     </div>
   );
 }
