@@ -1,6 +1,7 @@
 import './App.css';
 import { Suspense, lazy } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { Loader } from './components/Loader';
 
 const Main = lazy(() =>
   import('./pages/Main').then((module) => ({ default: module.Main }))
@@ -12,7 +13,7 @@ const Login = lazy(() =>
 function App() {
   return (
     <BrowserRouter>
-      <Suspense fallback={<div>Загрузка...</div>}>
+      <Suspense fallback={<Loader />}>
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Main />} />
