@@ -1,16 +1,24 @@
 import './App.css';
+import { Suspense, lazy } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { Main } from './pages/Main';
-import { Login } from './pages/Login';
+
+const Main = lazy(() =>
+  import('./pages/Main').then((module) => ({ default: module.Main }))
+);
+const Login = lazy(() =>
+  import('./pages/Login').then((module) => ({ default: module.Login }))
+);
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/" element={<Main />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
+      <Suspense fallback={<div>Загрузка...</div>}>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Main />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   );
 }
