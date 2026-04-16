@@ -1,5 +1,7 @@
-import { type FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import {
   Box,
   Button,
@@ -9,20 +11,42 @@ import {
   Typography,
 } from '@mui/material';
 
-export function Login() {
-  const [login, setLogin] = useState('');
-  const [password, setPassword] = useState('');
-  const navigate = useNavigate();
+const loginSchema = yup.object({
+  login: yup.string().required('Введите логин'),
+  password: yup
+    .string()
+    .required('Введите пароль')
+    .min(6, 'Пароль должен содержать минимум 6 символов'),
+});
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+type LoginFormValues = {
+  login: string;
+  password: string;
+};
+
+export function Login() {
+  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm<LoginFormValues>({
+    resolver: yupResolver(loginSchema),
+    mode: 'onTouched',
+    defaultValues: {
+      login: '',
+      password: '',
+    },
+  });
+
+  const onSubmit = () => {
     navigate('/');
   };
 
   return (
     <Container maxWidth="xs" sx={{ mt: 10 }}>
       <Paper elevation={4} sx={{ p: 4 }}>
-        <Box component="form" onSubmit={handleSubmit} noValidate>
+        <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate>
           <Typography
             component="h1"
             variant="h5"
@@ -36,9 +60,9 @@ export function Login() {
             variant="outlined"
             fullWidth
             margin="normal"
-            value={login}
-            onChange={(event) => setLogin(event.target.value)}
-            required
+            {...register('login')}
+            error={Boolean(errors.login)}
+            helperText={errors.login?.message}
           />
 
           <TextField
@@ -47,9 +71,9 @@ export function Login() {
             variant="outlined"
             fullWidth
             margin="normal"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            required
+            {...register('password')}
+            error={Boolean(errors.password)}
+            helperText={errors.password?.message}
           />
 
           <Button
@@ -58,7 +82,7 @@ export function Login() {
             variant="contained"
             size="large"
             sx={{ mt: 3 }}
-            disabled={!login || !password}
+            disabled={!isValid}
           >
             Войти
           </Button>
