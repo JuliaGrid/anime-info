@@ -12,6 +12,8 @@ alwaysApply: true
 - Используй файлы `styles.module.css` для стилей компонентов.
 - Импортируй стили как объект модуля (например: `import classes from './styles.module.css'`).
 - Применяй классы через обращение к объекту модуля (например: `className={classes.root}`).
+- Именуй CSS-классы строго по БЭМ: `block`, `block__element`, `block--modifier`.
+- Предпочитай доступ к классам через точку: `classes.app__content`, а не через скобки: `classes['app__content']`.
 
 ## Не использовать
 

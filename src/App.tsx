@@ -1,4 +1,3 @@
-import './App.css';
 import { Suspense, lazy } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { Footer } from './components/Footer';
@@ -16,7 +15,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className={classes.app}>
-        <div className={classes.content}>
+        <div className={classes.app__content}>
           <Suspense fallback={<Loader />}>
             <Routes>
               <Route path="/login" element={<Login />} />
