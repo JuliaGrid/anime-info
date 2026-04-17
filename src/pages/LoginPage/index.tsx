@@ -1,7 +1,7 @@
 import { Header } from '../../containers/Header';
 import { LoginForm } from '../../containers/LoginForm';
 
-export function Login() {
+export function LoginPage() {
   return (
     <>
       <Header />

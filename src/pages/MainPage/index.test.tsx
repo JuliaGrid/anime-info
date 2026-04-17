@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import { Main } from '.';
+import { MainPage } from '.';
 import { apiMock } from '../../__tests__/__mocks__/anime';
 import { Api } from '../../../jikan-client/Api';
 
@@ -24,11 +24,11 @@ function mockApi(isError = false) {
   return getAnimeSearchMock;
 }
 
-describe('Main', () => {
+describe('MainPage', () => {
   it('render component', () => {
     render(
       <MemoryRouter>
-        <Main />
+        <MainPage />
       </MemoryRouter>
     );
     expect(screen.getByText('AnimeList')).toBeInTheDocument();
@@ -39,7 +39,7 @@ describe('Main', () => {
 
     render(
       <MemoryRouter>
-        <Main />
+        <MainPage />
       </MemoryRouter>
     );
 
@@ -60,7 +60,7 @@ describe('Main', () => {
 
     render(
       <MemoryRouter>
-        <Main />
+        <MainPage />
       </MemoryRouter>
     );
 
@@ -81,7 +81,7 @@ describe('Main', () => {
 
     render(
       <MemoryRouter>
-        <Main />
+        <MainPage />
       </MemoryRouter>
     );
 
