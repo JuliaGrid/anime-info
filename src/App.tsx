@@ -1,25 +1,31 @@
-import './App.css';
 import { Suspense, lazy } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { Footer } from './components/Footer';
 import { Loader } from './components/Loader';
+import classes from './styles.module.css';
 
-const Main = lazy(() =>
-  import('./pages/Main').then((module) => ({ default: module.Main }))
+const MainPage = lazy(() =>
+  import('./pages/MainPage').then((module) => ({ default: module.MainPage }))
 );
-const Login = lazy(() =>
-  import('./pages/Login').then((module) => ({ default: module.Login }))
+const LoginPage = lazy(() =>
+  import('./pages/LoginPage').then((module) => ({ default: module.LoginPage }))
 );
 
 function App() {
   return (
     <BrowserRouter>
-      <Suspense fallback={<Loader />}>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/" element={<Main />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </Suspense>
+      <div className={classes.app}>
+        <div className={classes.app__content}>
+          <Suspense fallback={<Loader />}>
+            <Routes>
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/" element={<MainPage />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </Suspense>
+        </div>
+        <Footer />
+      </div>
     </BrowserRouter>
   );
 }

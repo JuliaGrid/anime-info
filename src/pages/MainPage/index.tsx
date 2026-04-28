@@ -9,7 +9,7 @@ interface Result {
   title: string;
 }
 
-export function Main() {
+export function MainPage() {
   const [result, setResult] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
