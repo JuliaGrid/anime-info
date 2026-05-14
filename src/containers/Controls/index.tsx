@@ -15,23 +15,29 @@ export const Controls = (props: IControls) => {
     setInput(e.target.value);
   };
 
+  const eventHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    buttonHandler(input);
+  };
+
   return (
-    <div className="controls">
+    <form onSubmit={eventHandler} className="controls">
       <TextField
         className="input"
         onChange={inputHandler}
         placeholder="Placeholder"
         variant="outlined"
         sx={{
+          width: '100%',
           marginRight: '10px',
           '& .MuiInputBase-input': {
             padding: '8px',
           },
         }}
       />
-      <Button variant="contained" onClick={() => buttonHandler(input)}>
+      <Button type="submit" variant="contained">
         Search
       </Button>
-    </div>
+    </form>
   );
 };

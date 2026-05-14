@@ -14,6 +14,10 @@ https://juliagrid.github.io/anime-info/
 - chore: Прочие задачи (например, изменения в .gitignore).
 - revert: Откат предыдущего коммита.
 
+## Api
+
+https://jikan.moe/
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
