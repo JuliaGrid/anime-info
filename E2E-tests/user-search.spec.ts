@@ -1,11 +1,10 @@
 import { test, expect } from '@playwright/test';
+import MainPage from './pages/mainPage';
 
 test('User search. Server error', async ({ page }) => {
-  await page.goto('/');
-  const searchInput = page.locator('input[type="text"]');
-  //await page.fill('input[type="text"]', 'Naruto');
-  await searchInput.pressSequentially('Naruto', { delay: 150 });
-  await page.press('input[type="text"]', 'Enter');
+  const mainPage = new MainPage(page);
+  await mainPage.goto();
+  mainPage.searchAnime('Naruto');
   await page.route('**/api/anime?q=Naruto', (route) => {
     route.fulfill({
       status: 504,
