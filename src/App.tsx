@@ -3,6 +3,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { Footer } from './components/Footer';
 import { Loader } from './components/Loader';
 import classes from './styles.module.css';
+import TestPage from './pages/TestPage';
 
 const MainPage = lazy(() =>
   import('./pages/MainPage').then((module) => ({ default: module.MainPage }))
@@ -19,6 +20,7 @@ function App() {
           <Suspense fallback={<Loader />}>
             <Routes>
               <Route path="/login" element={<LoginPage />} />
+              <Route path="/test" element={<TestPage />} />
               <Route path="/" element={<MainPage />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>

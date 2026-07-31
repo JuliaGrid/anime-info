@@ -19,9 +19,13 @@
   gap: 16px;
 }
 
-.header__link {
+.header__link,
+.header__link:visited {
   color: #333333;
   text-decoration: none;
+}
+
+.header__link {
   border-radius: 4px;
   transition: background-color 0.2s ease;
 }

@@ -13,6 +13,9 @@ export function Header() {
         <Link className={classes.header__link} to="/login">
           Вход
         </Link>
+        <Link className={classes.header__link} to="/test">
+          Тест
+        </Link>
       </nav>
     </header>
   );
