@@ -9,6 +9,10 @@ export function TestPage() {
     window.open('/login', '_blank', 'noopener,noreferrer');
   };
 
+  const sendRequest = async () => {
+    await fetch('https://api.jikan.moe/v4/anime?q=Naruto');
+  };
+
   return (
     <>
       <Header />
@@ -16,7 +20,7 @@ export function TestPage() {
         <div className="testpage__wrapper">
           <h2 className="testpage__title">Тестовая страница</h2>
 
-          <div className="testpage__buttons">
+          <div className="testpage__buttons ">
             <button
               id="open-dialog"
               className="testpage__button"
@@ -30,6 +34,12 @@ export function TestPage() {
               onClick={openLoginInNewTab}
             >
               Открыть логин в новой вкладке
+            </button>
+            <button
+              className="testpage__button testpage__button--secondary"
+              onClick={sendRequest}
+            >
+              Отправить запрос
             </button>
           </div>
 
